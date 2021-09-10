@@ -16,19 +16,18 @@ function checkProfitOrLoss(buyPrice, sellPrice) {
     } else { return 0 }
 }
 function calculateProfitOrLoss(buyPrice, buyQuantity, sellPrice) {
-    console.log((buyPrice+sellPrice)/10)
     if (pnlStatus === 2) {
-        console.log("PRofit")
+        // console.log("PRofit")
         let profit = ((sellPrice - buyPrice) * buyQuantity).toFixed(2);
         let returns = (((sellPrice - buyPrice) / buyPrice) * 100).toFixed(2);
         return [profit, returns]
     } else if (pnlStatus === 1) {
-        console.log("No change")
+        // console.log("No change")
         let profit = ((sellPrice - buyPrice) * buyQuantity).toFixed(2);
         let returns = (((sellPrice - buyPrice) / buyPrice) * 100).toFixed(2);
         return [profit, returns]
     } else {
-        console.log("Loss")
+        // console.log("Loss")
         let loss = ((buyPrice - sellPrice) * buyQuantity).toFixed(2);
         let returns = (((buyPrice - sellPrice) / buyPrice) * 100).toFixed(2);
         return [loss, returns]
@@ -37,9 +36,9 @@ function calculateProfitOrLoss(buyPrice, buyQuantity, sellPrice) {
 function updateMessage(pnlStatus,change,returns){
     if(pnlStatus === 2){
         messageDiv.innerText = `Wow, You are in a Profit of ${change} with ${returns}% returns`;
-        messageDiv.style.color = "Green";
+        messageDiv.style.color = "#73e36d";
     }else if(pnlStatus === 1){
-        messageDiv.style.color = "black";
+        messageDiv.style.color = "#25d6df";
         messageDiv.innerText = `🤷‍♂️ No Gain No Pain`;
     }else{
         messageDiv.style.color = "red";
