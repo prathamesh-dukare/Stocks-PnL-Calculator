@@ -46,8 +46,14 @@ function updateMessage(pnlStatus,change,returns){
     }
 }
 checkPnLBtn.addEventListener("click", function checkPnlHandler() {
-    pnlStatus = checkProfitOrLoss(Number(buyPrice.value), Number(sellPrice.value));
+    if((buyPrice.value !=="" && buyQuantity.value !=="")&&sellPrice.value!==""){
+        pnlStatus = checkProfitOrLoss(Number(buyPrice.value), Number(sellPrice.value));
     let profitOrLoss = calculateProfitOrLoss(Number(buyPrice.value), Number(buyQuantity.value), Number(sellPrice.value));
     updateMessage(pnlStatus,profitOrLoss[0],profitOrLoss[1])
+    }else{
+        messageDiv.innerText = `Please Enter All Fields!`;
+        messageDiv.style.color = "red";
+    }
+    
 
 })
