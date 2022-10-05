@@ -10,50 +10,66 @@ const messageDiv = document.querySelector("#message-div");
 
 function checkProfitOrLoss(buyPrice, sellPrice) {
     if (sellPrice > buyPrice) {
-        return 2
+        return 2;
     } else if (sellPrice == buyPrice) {
-        return 1
-    } else { return 0 }
+        return 1;
+    } else {
+        return 0;
+    }
 }
 function calculateProfitOrLoss(buyPrice, buyQuantity, sellPrice) {
     if (pnlStatus === 2) {
         // console.log("PRofit")
         let profit = ((sellPrice - buyPrice) * buyQuantity).toFixed(2);
         let returns = (((sellPrice - buyPrice) / buyPrice) * 100).toFixed(2);
-        return [profit, returns]
+        return [profit, returns];
     } else if (pnlStatus === 1) {
         // console.log("No change")
         let profit = ((sellPrice - buyPrice) * buyQuantity).toFixed(2);
         let returns = (((sellPrice - buyPrice) / buyPrice) * 100).toFixed(2);
-        return [profit, returns]
+        return [profit, returns];
     } else {
         // console.log("Loss")
         let loss = ((buyPrice - sellPrice) * buyQuantity).toFixed(2);
         let returns = (((buyPrice - sellPrice) / buyPrice) * 100).toFixed(2);
-        return [loss, returns]
+        return [loss, returns];
     }
 }
-function updateMessage(pnlStatus,change,returns){
-    if(pnlStatus === 2){
+function updateMessage(pnlStatus, change, returns) {
+    if (pnlStatus === 2) {
         messageDiv.innerText = `Wow, You are in a Profit of ${change} with ${returns}% returns`;
         messageDiv.style.color = "#73e36d";
-    }else if(pnlStatus === 1){
+    } else if (pnlStatus === 1) {
         messageDiv.style.color = "#25d6df";
         messageDiv.innerText = `🤷‍♂️ No Gain No Pain`;
-    }else{
+    } else {
         messageDiv.style.color = "red";
         messageDiv.innerText = `ohh No, You are in a Loss of ${change} with -${returns}% returns`;
     }
 }
 checkPnLBtn.addEventListener("click", function checkPnlHandler() {
-    if((buyPrice.value !=="" && buyQuantity.value !=="")&&sellPrice.value!==""){
-        pnlStatus = checkProfitOrLoss(Number(buyPrice.value), Number(sellPrice.value));
-    let profitOrLoss = calculateProfitOrLoss(Number(buyPrice.value), Number(buyQuantity.value), Number(sellPrice.value));
-    updateMessage(pnlStatus,profitOrLoss[0],profitOrLoss[1])
-    }else{
+    if (
+        buyPrice.value !== "" &&
+        buyQuantity.value !== "" &&
+        sellPrice.value !== ""
+    ) {
+        if (buyPrice.value > -1 && buyQuantity.value > -1 && sellPrice.value > -1) {
+            pnlStatus = checkProfitOrLoss(
+                Number(buyPrice.value),
+                Number(sellPrice.value)
+            );
+            let profitOrLoss = calculateProfitOrLoss(
+                Number(buyPrice.value),
+                Number(buyQuantity.value),
+                Number(sellPrice.value)
+            );
+            updateMessage(pnlStatus, profitOrLoss[0], profitOrLoss[1]);
+        } else{
+            messageDiv.style.color = "red";
+            messageDiv.innerText = `Please enter valid & positive inputs`;
+        }
+    }else {
         messageDiv.innerText = `Please Enter All Fields!`;
         messageDiv.style.color = "red";
     }
-    
-
-})
+});
